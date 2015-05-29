@@ -24,14 +24,14 @@ using System.Linq;
  * 
  * */
 
-namespace GeneralTreeLayout.Models.InternalTree
+namespace GeneralTreeLayout
 {
     internal class TreeLayout<T>
     {
         private Dictionary<int, double> max_level_height;
         private Dictionary<int, double> max_level_width;
         private Dictionary<int, Node<T>> previous_level_node;
-        private Drawing.Point root_offset;
+        private Point root_offset;
         private readonly Node<T> root;
 
         public TreeLayoutOptions Options { get; set; }
@@ -162,7 +162,7 @@ namespace GeneralTreeLayout.Models.InternalTree
             }
         }
 
-        public Drawing.Rectangle GetBoundingBoxOfTree()
+        public Rectangle GetBoundingBoxOfTree()
         {
             if (this.Root.ChildCount < 1)
             {
@@ -170,7 +170,7 @@ namespace GeneralTreeLayout.Models.InternalTree
             }
             var nodes = this.Nodes.ToList();
 
-            var bb = new Drawing.BoundingBox(nodes.Select(n => n.Rect));
+            var bb = new BoundingBox(nodes.Select(n => n.Rect));
             if (!bb.HasValue)
             {
                 throw new System.InvalidOperationException("Internal Error: Could not compute bounding box");
@@ -207,7 +207,7 @@ namespace GeneralTreeLayout.Models.InternalTree
         //Layout algorithm
         private void first_walk(Node<T> node, int level)
         {
-            node.Position = new Drawing.Point(0, 0);
+            node.Position = new Point(0, 0);
             node.prelim_x = 0;
             node.modifier = 0;
             node.left_neighbor = null;
@@ -267,7 +267,7 @@ namespace GeneralTreeLayout.Models.InternalTree
             }
         }
 
-        private void second_walk(Node<T> node, int level, Drawing.Point p)
+        private void second_walk(Node<T> node, int level, Point p)
         {
             /*------------------------------------------------------
                 * During a second pre-order walk, each node is given a
@@ -306,15 +306,15 @@ namespace GeneralTreeLayout.Models.InternalTree
             }
             switch (this.Options.Alignment)
             {
-                case Drawing.AlignmentVertical.Top:
+                case AlignmentVertical.Top:
                     node.Position = temp_point;
                     break;
 
-                case Drawing.AlignmentVertical.Center:
+                case AlignmentVertical.Center:
                     node.Position = temp_point.Add(0, (maxsizeTmp - nodesizeTmp)/2.0);
                     break;
 
-                case Drawing.AlignmentVertical.Bottom:
+                case AlignmentVertical.Bottom:
                     node.Position = temp_point.Add(0, maxsizeTmp - nodesizeTmp);
                     break;
             }
@@ -322,19 +322,19 @@ namespace GeneralTreeLayout.Models.InternalTree
             if (flag)
             {
                 // QUESTION: Why is this step performed?
-                node.Position = new Drawing.Point(node.Position.Y, node.Position.X);
+                node.Position = new Point(node.Position.Y, node.Position.X);
             }
 
             switch (this.Options.Direction)
             {
                 case LayoutDirection.Down:
                     {
-                        node.Position = new Drawing.Point(node.Position.X, -node.Position.Y - nodesizeTmp);
+                        node.Position = new Point(node.Position.X, -node.Position.Y - nodesizeTmp);
                         break;
                     }
                 case LayoutDirection.Left:
                     {
-                        node.Position = new Drawing.Point(-node.Position.X - nodesizeTmp, node.Position.Y);
+                        node.Position = new Point(-node.Position.X - nodesizeTmp, node.Position.Y);
                         break;
                     }
             }
@@ -375,7 +375,7 @@ namespace GeneralTreeLayout.Models.InternalTree
             // NOTE: in the original code this was a case statement on Options.Direction that did the same thing for each direction 
             this.root_offset = this.Options.TopAdjustment + this.root.Position;
 
-            this.second_walk(this.root, 0, new Drawing.Point(0, 0));
+            this.second_walk(this.root, 0, new Point(0, 0));
 
             this.max_level_height = null;
             this.max_level_width = null;
@@ -419,7 +419,7 @@ namespace GeneralTreeLayout.Models.InternalTree
             }
         }
 
-        private static double GetSide(Drawing.Rectangle r, LayoutDirection direction)
+        private static double GetSide(Rectangle r, LayoutDirection direction)
         {
             switch (direction)
             {
@@ -473,7 +473,7 @@ namespace GeneralTreeLayout.Models.InternalTree
             }
         }
 
-        public Drawing.LineSegment GetConnectionLine(ParentChildConnection<Node<T>> connection)
+        public LineSegment GetConnectionLine(ParentChildConnection<Node<T>> connection)
         {
             var parent_rect = connection.Parent.Rect;
             var child_rect = connection.Child.Rect;
@@ -501,10 +501,10 @@ namespace GeneralTreeLayout.Models.InternalTree
                 child_y = child_rect.Center.Y;
             }
 
-            var parent_attach_point = new Drawing.Point(parent_x, parent_y);
-            var child_attach_point = new Drawing.Point(child_x, child_y);
+            var parent_attach_point = new Point(parent_x, parent_y);
+            var child_attach_point = new Point(child_x, child_y);
 
-            return new Drawing.LineSegment(parent_attach_point, child_attach_point);
+            return new LineSegment(parent_attach_point, child_attach_point);
         }
 
         public static bool IsVertical(LayoutDirection direction)
@@ -512,10 +512,10 @@ namespace GeneralTreeLayout.Models.InternalTree
             return (direction == LayoutDirection.Up || direction == LayoutDirection.Down);
         }
 
-        public Drawing.Point[] GetConnectionPolyline(ParentChildConnection<Node<T>> connection)
+        public Point[] GetConnectionPolyline(ParentChildConnection<Node<T>> connection)
         {
             var lineseg = this.GetConnectionLine(connection);
-            Drawing.Point m0, m1;
+            Point m0, m1;
 
             var parent_attach_point = lineseg.Start;
             var child_attach_point = lineseg.End;
@@ -529,8 +529,8 @@ namespace GeneralTreeLayout.Models.InternalTree
                 {
                     b = -b;
                 }
-                m0 = new Drawing.Point(lineseg.Start.X, lineseg.End.Y + b);
-                m1 = new Drawing.Point(lineseg.End.X, lineseg.End.Y + b);
+                m0 = new Point(lineseg.Start.X, lineseg.End.Y + b);
+                m1 = new Point(lineseg.End.X, lineseg.End.Y + b);
             }
             else
             {
@@ -538,14 +538,14 @@ namespace GeneralTreeLayout.Models.InternalTree
                 {
                     a = -a;
                 }
-                m0 = new Drawing.Point(lineseg.End.X - a, lineseg.Start.Y);
-                m1 = new Drawing.Point(lineseg.End.X - a, lineseg.End.Y);
+                m0 = new Point(lineseg.End.X - a, lineseg.Start.Y);
+                m1 = new Point(lineseg.End.X - a, lineseg.End.Y);
             }
 
             return new[] {lineseg.Start, m0, m1, lineseg.End};
         }
 
-        public Drawing.Point[] GetConnectionBezier(ParentChildConnection<Node<T>> connection)
+        public Point[] GetConnectionBezier(ParentChildConnection<Node<T>> connection)
         {
             var lineseg = this.GetConnectionLine(connection);
 
@@ -557,8 +557,8 @@ namespace GeneralTreeLayout.Models.InternalTree
 
 
             var handle_displacement = TreeLayout<T>.IsVertical(this.Options.Direction)
-                                          ? new Drawing.Point(0, dif.Y)
-                                          : new Drawing.Point(dif.X, 0);
+                                          ? new Point(0, dif.Y)
+                                          : new Point(dif.X, 0);
 
             var h1 = parent_attach_point.Add(handle_displacement);
             var h2 = child_attach_point.Add(handle_displacement * (-1));
@@ -570,22 +570,22 @@ namespace GeneralTreeLayout.Models.InternalTree
             TA root,
             System.Func<TA, IEnumerable<TA>> enum_children,
             System.Func<TA, T> func_get_data,
-            System.Func<TA, Drawing.Size> func_get_size)
+            System.Func<TA, Size> func_get_size)
         {
-            var walkevents = Internal.TreeOps.Walk<TA>(root, n => enum_children(n));
+            var walkevents = TreeOps.Walk<TA>(root, n => enum_children(n));
             return TreeLayout<T>.CreateLayoutTree(walkevents, func_get_data, func_get_size);
         }
 
         private static Node<T> CreateLayoutTree<TA>(
-            IEnumerable<Internal.WalkEvent<TA>> walkevents,
+            IEnumerable<WalkEvent<TA>> walkevents,
             System.Func<TA, T> func_get_data,
-            System.Func<TA, Drawing.Size> func_get_size)
+            System.Func<TA, Size> func_get_size)
         {
             var stack = new Stack<Node<T>>();
             Node<T> layout_root = null;
             foreach (var walkevent in walkevents)
             {
-                if (walkevent.Type == Internal.WalkEvent<TA>.WalkEventType.Enter)
+                if (walkevent.Type == WalkEvent<TA>.WalkEventType.Enter)
                 {
                     Node<T> parent = null;
                     if (stack.Count > 0)
@@ -608,7 +608,7 @@ namespace GeneralTreeLayout.Models.InternalTree
                         layout_root = layout_node;
                     }
                 }
-                else if (walkevent.Type == Internal.WalkEvent<TA>.WalkEventType.Exit)
+                else if (walkevent.Type == WalkEvent<TA>.WalkEventType.Exit)
                 {
                     var layout_node = stack.Pop();
                 }

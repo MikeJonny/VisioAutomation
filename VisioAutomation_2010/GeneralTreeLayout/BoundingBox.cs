@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GeneralTreeLayout.Drawing
+namespace GeneralTreeLayout
 {
     public struct BoundingBox
     {

@@ -1,4 +1,4 @@
-﻿namespace GeneralTreeLayout.Drawing
+﻿namespace GeneralTreeLayout
 {
     public struct Size
     {

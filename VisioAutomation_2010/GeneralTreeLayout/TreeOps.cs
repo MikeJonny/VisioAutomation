@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace GeneralTreeLayout.Internal
+namespace GeneralTreeLayout
 {
     internal static class TreeOps
     {

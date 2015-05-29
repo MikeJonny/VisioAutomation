@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeneralTreeLayout.Models.InternalTree
+namespace GeneralTreeLayout
 {
     internal class Node<T>
     {
@@ -17,11 +17,11 @@ namespace GeneralTreeLayout.Models.InternalTree
 
         public int Id { get; set; }
 
-        public Drawing.Size Size { get; set; }
+        public Size Size { get; set; }
 
-        public Drawing.Rectangle Rect => new Drawing.Rectangle(this.Position, this.Size);
+        public Rectangle Rect => new Rectangle(this.Position, this.Size);
 
-        internal void init(int id, Node<T> parent, Drawing.Size size, T data)
+        internal void init(int id, Node<T> parent, Size size, T data)
         {
             this.Id = id;
             this.Size = size;
@@ -31,16 +31,16 @@ namespace GeneralTreeLayout.Models.InternalTree
             this.child_list = new List<Node<T>>();
             this.left_neighbor = null;
             this.right_neighbor = null;
-            this.Position = new Drawing.Point(0, 0);
+            this.Position = new Point(0, 0);
             this.is_collapsed = false;
         }
 
-        internal Node(int id, Node<T> parent, Drawing.Size size)
+        internal Node(int id, Node<T> parent, Size size)
         {
             this.init(id, parent, size, default(T));
         }
 
-        public Node(Drawing.Size size, T data)
+        public Node(Size size, T data)
         {
             this.init(Node<T>.node_seq_num++, null, size, data);
         }
@@ -101,7 +101,7 @@ namespace GeneralTreeLayout.Models.InternalTree
             return child;
         }
 
-        public Node<T> AddNewChild(Drawing.Size size)
+        public Node<T> AddNewChild(Size size)
         {
             var new_child = new Node<T>(Node<T>.node_seq_num++, null, size);
             this.add_child(new_child);
@@ -124,7 +124,7 @@ namespace GeneralTreeLayout.Models.InternalTree
 
         public T Data { get; set; }
 
-        public Drawing.Point Position { get; set; }
+        public Point Position { get; set; }
 
         public bool GetIsAncestorCollapsed()
         {
@@ -161,7 +161,7 @@ namespace GeneralTreeLayout.Models.InternalTree
 
         public IEnumerable<Node<T>> EnumRecursive()
         {
-            var iter = Internal.TreeOps.Walk<Node<T>>(this, n => n.EnumChildren());
+            var iter = TreeOps.Walk<Node<T>>(this, n => n.EnumChildren());
             var iter2 = iter.Where(i => i.HasEnteredNode).Select(i => i.Node);
             return iter2;
         }

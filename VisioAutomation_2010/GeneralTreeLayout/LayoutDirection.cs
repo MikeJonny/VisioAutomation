@@ -1,4 +1,4 @@
-﻿namespace GeneralTreeLayout.Models.InternalTree
+﻿namespace GeneralTreeLayout
 {
     internal enum LayoutDirection
     {
