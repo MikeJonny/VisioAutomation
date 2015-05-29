@@ -41,7 +41,7 @@
     <Compile Include="AlignmentVertical.cs" />
     <Compile Include="BoundingBox.cs" />
     <Compile Include="DictionaryUtil.cs" />
-    <Compile Include="LayoutDirection.cs" />
+    <Compile Include="TreeLayoutDirection.cs" />
     <Compile Include="LineSegment.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Point.cs" />

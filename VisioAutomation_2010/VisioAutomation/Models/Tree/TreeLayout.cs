@@ -159,28 +159,28 @@ namespace VisioAutomation.Models.Tree
             }
         }
 
-        private GeneralTreeLayout.LayoutDirection map_direction2(LayoutDirection input_dir)
+        private GeneralTreeLayout.TreeLayoutDirection map_direction2(LayoutDirection input_dir)
         {
-            GeneralTreeLayout.LayoutDirection dir;
+            GeneralTreeLayout.TreeLayoutDirection dir;
             if (input_dir == LayoutDirection.Down)
             {
-                dir = GeneralTreeLayout.LayoutDirection.Down;
+                dir = GeneralTreeLayout.TreeLayoutDirection.TopToBottom;
             }
             else if (input_dir == LayoutDirection.Up)
             {
-                dir = GeneralTreeLayout.LayoutDirection.Up;
+                dir = GeneralTreeLayout.TreeLayoutDirection.BottomToTop;
             }
             else if (input_dir == LayoutDirection.Left)
             {
-                dir = GeneralTreeLayout.LayoutDirection.Left;
+                dir = GeneralTreeLayout.TreeLayoutDirection.RightToLeft;
             }
             else if (input_dir == LayoutDirection.Right)
             {
-                dir = GeneralTreeLayout.LayoutDirection.Right;
+                dir = GeneralTreeLayout.TreeLayoutDirection.LeftToRight;
             }
             else
             {
-                dir = GeneralTreeLayout.LayoutDirection.Down;
+                dir = GeneralTreeLayout.TreeLayoutDirection.TopToBottom;
             }
             return dir;
         }
