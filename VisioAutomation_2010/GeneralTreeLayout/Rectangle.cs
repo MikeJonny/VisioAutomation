@@ -1,4 +1,4 @@
-﻿namespace VisioAutomation.Drawing
+﻿namespace GeneralTreeLayout.Drawing
 {
     public struct Rectangle
     {

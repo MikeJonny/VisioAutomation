@@ -24,7 +24,7 @@ using System.Linq;
  * 
  * */
 
-namespace VisioAutomation.Models.InternalTree
+namespace GeneralTreeLayout.Models.InternalTree
 {
     internal class TreeLayout<T>
     {

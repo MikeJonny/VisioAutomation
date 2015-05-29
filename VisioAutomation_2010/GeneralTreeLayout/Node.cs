@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VisioAutomation.Models.InternalTree
+namespace GeneralTreeLayout.Models.InternalTree
 {
     internal class Node<T>
     {
