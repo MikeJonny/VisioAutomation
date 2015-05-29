@@ -26,7 +26,7 @@ using System.Linq;
 
 namespace GeneralTreeLayout
 {
-    internal class TreeLayout<T>
+    public class TreeLayout<T>
     {
         private Dictionary<int, double> max_level_height;
         private Dictionary<int, double> max_level_width;

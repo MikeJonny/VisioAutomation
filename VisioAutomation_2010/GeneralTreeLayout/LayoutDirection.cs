@@ -1,6 +1,6 @@
 ﻿namespace GeneralTreeLayout
 {
-    internal enum LayoutDirection
+    public enum LayoutDirection
     {
         Up = 0,
         Down = 1,

@@ -1,6 +1,6 @@
 namespace GeneralTreeLayout
 {
-    internal class TreeLayoutOptions
+    public class TreeLayoutOptions
     {
         public Point TopAdjustment; // How to adjust the apex 
 

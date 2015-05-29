@@ -278,11 +278,6 @@
     <Compile Include="Models\OrgChart\LayoutOptions.cs" />
     <Compile Include="Models\OrgChart\Node.cs" />
     <Compile Include="Models\OrgChart\NodeList.cs" />
-    <Compile Include="Models\InternalTree\DictionaryUtil.cs" />
-    <Compile Include="Models\InternalTree\LayoutDirection.cs" />
-    <Compile Include="Models\InternalTree\Node.cs" />
-    <Compile Include="Models\InternalTree\TreeLayout.cs" />
-    <Compile Include="Models\InternalTree\TreeLayoutOptions.cs" />
     <Compile Include="Models\Tree\Drawing.cs" />
     <Compile Include="Models\Tree\LayoutDirection.cs" />
     <Compile Include="Models\Tree\LayoutOptions.cs" />
@@ -410,6 +405,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Scripting\Documents\FlowChartXMLSchema.vsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeneralTreeLayout\GeneralTreeLayout.csproj">
+      <Project>{1494a3f1-95ee-4ac8-a6d1-96dc8bf46ea8}</Project>
+      <Name>GeneralTreeLayout</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

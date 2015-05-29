@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace GeneralTreeLayout
 {
-    internal class Node<T>
+    public class Node<T>
     {
         private List<Node<T>> child_list;
 

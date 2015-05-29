@@ -159,6 +159,10 @@
     <Compile Include="Extensions\CustomProps_Test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GeneralTreeLayout\GeneralTreeLayout.csproj">
+      <Project>{1494a3f1-95ee-4ac8-a6d1-96dc8bf46ea8}</Project>
+      <Name>GeneralTreeLayout</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisioAutomation\VisioAutomation.csproj">
       <Project>{920C7842-10E0-48C3-A439-C785FC2B234E}</Project>
       <Name>VisioAutomation</Name>
