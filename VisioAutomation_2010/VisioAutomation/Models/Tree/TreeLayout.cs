@@ -21,7 +21,7 @@ namespace VisioAutomation.Models.Tree
         private GeneralTreeLayout.Node<object> node_to_layout_node(Node n)
         {
             var nodesize = n.Size.GetValueOrDefault(this.LayoutOptions.DefaultNodeSize);
-            var newnode = new GeneralTreeLayout.Node<object>(new GeneralTreeLayout.Size(nodesize.Width,nodesize.Height), n);
+            var newnode = new GeneralTreeLayout.Node<object>(new GeneralTreeLayout.Geometry.Size(nodesize.Width,nodesize.Height), n);
             return newnode;
         }
 
@@ -124,7 +124,7 @@ namespace VisioAutomation.Models.Tree
             {
                 foreach (var connection in layout.EnumConnections())
                 {
-                    GeneralTreeLayout.Point[] bez = layout.GetConnectionBezier(connection);
+                    GeneralTreeLayout.Geometry.Point[] bez = layout.GetConnectionBezier(connection);
                     VisioAutomation.Drawing.Point[] bez2 =
                         bez.Select(p => new VisioAutomation.Drawing.Point(p.X, p.Y)).ToArray();
                     var shape = page_node.Shapes.DrawBezier(bez2);

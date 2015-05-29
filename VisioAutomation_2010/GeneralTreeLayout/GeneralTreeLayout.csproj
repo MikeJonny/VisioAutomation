@@ -38,19 +38,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlignmentVertical.cs" />
-    <Compile Include="BoundingBox.cs" />
+    <Compile Include="Geometry\BoundingBox.cs" />
     <Compile Include="DictionaryUtil.cs" />
     <Compile Include="TreeLayoutDirection.cs" />
-    <Compile Include="LineSegment.cs" />
+    <Compile Include="Geometry\LineSegment.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Geometry\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rectangle.cs" />
-    <Compile Include="Size.cs" />
+    <Compile Include="Geometry\Rectangle.cs" />
+    <Compile Include="Geometry\Size.cs" />
     <Compile Include="TreeLayout.cs" />
     <Compile Include="TreeLayoutOptions.cs" />
-    <Compile Include="TreeOps.cs" />
-    <Compile Include="WalkEvent.cs" />
+    <Compile Include="TreeOps\TreeOps.cs" />
+    <Compile Include="TreeOps\WalkEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

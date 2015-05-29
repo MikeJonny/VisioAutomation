@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GeneralTreeLayout
+namespace GeneralTreeLayout.Geometry
 {
     public struct Point
     {

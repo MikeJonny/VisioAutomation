@@ -19,7 +19,7 @@ namespace VisioAutomation.Models.OrgChart
         private GeneralTreeLayout.Node<object> node_to_layout_node(Node n)
         {
             var nodesize = n.Size.GetValueOrDefault(this.LayoutOptions.DefaultNodeSize);
-            var newnode = new GeneralTreeLayout.Node<object>( new GeneralTreeLayout.Size(nodesize.Width,nodesize.Height), n);
+            var newnode = new GeneralTreeLayout.Node<object>( new GeneralTreeLayout.Geometry.Size(nodesize.Width,nodesize.Height), n);
             return newnode;
         }
 

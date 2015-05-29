@@ -1,4 +1,4 @@
-﻿namespace GeneralTreeLayout
+﻿namespace GeneralTreeLayout.Geometry
 {
     public struct Rectangle
     {
@@ -27,7 +27,7 @@
         }
 
 
-        public Rectangle(Point lowerleft, Size s)
+        public Rectangle(Geometry.Point lowerleft, Size s)
             : this()
         {
             if (s.Width < 0)
@@ -48,13 +48,13 @@
 
 
 
-        public Point LowerLeft => new Point(this.Left, this.Bottom);
+        public Geometry.Point LowerLeft => new Geometry.Point(this.Left, this.Bottom);
 
-        public Point LowerRight => new Point(this.Right, this.Bottom);
+        public Geometry.Point LowerRight => new Geometry.Point(this.Right, this.Bottom);
 
-        public Point UpperLeft => new Point(this.Left, this.Top);
+        public Geometry.Point UpperLeft => new Geometry.Point(this.Left, this.Top);
 
-        public Point UpperRight => new Point(this.Right, this.Top);
+        public Geometry.Point UpperRight => new Geometry.Point(this.Right, this.Top);
 
         public Size Size => new Size(this.Width, this.Height);
 
@@ -62,29 +62,6 @@
 
         public double Height => this.Top - this.Bottom;
 
-        public Point Center => new Point((this.Left + this.Right)/2.0, (this.Bottom + this.Top)/2.0);
-
-
-        public Rectangle Add(double dx, double dy)
-        {
-            var r2 = new Rectangle(this.Left + dx, this.Bottom + dy, this.Right + dx, this.Top + dy);
-            return r2;
-        }
-
-
-
-        public Rectangle Subtract(double dx, double dy)
-        {
-            var r2 = new Rectangle(this.Left - dx, this.Bottom - dy, this.Right - dx, this.Top - dy);
-            return r2;
-        }
-
-
-
-        public Rectangle Multiply(double sx, double sy)
-        {
-            var r2 = new Rectangle(this.Left*sx, this.Bottom*sy, this.Right*sx, this.Top*sy);
-            return r2;
-        }
+        public Geometry.Point Center => new Geometry.Point((this.Left + this.Right)/2.0, (this.Bottom + this.Top)/2.0);
     }
 }

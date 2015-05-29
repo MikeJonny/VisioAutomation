@@ -1,24 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace GeneralTreeLayout
+namespace GeneralTreeLayout.Geometry
 {
     public struct BoundingBox
     {
-        private bool initialized;
-
         private double min_x;
         private double min_y;
         private double max_x;
         private double max_y;
-
-        public BoundingBox( IEnumerable<Point> points) :
-            this()
-        {
-            foreach (var p in points)
-            {
-                this.Add(p);
-            }
-        }
 
         public BoundingBox(IEnumerable<Rectangle> rects) :
             this()
@@ -31,7 +20,7 @@ namespace GeneralTreeLayout
 
         public void Add(Point p)
         {
-            if (this.initialized)
+            if (this.HasValue)
             {
                 if (p.X < this.min_x)
                 {
@@ -67,7 +56,7 @@ namespace GeneralTreeLayout
                 this.max_x = p.X;
                 this.min_y = p.Y;
                 this.max_y = p.Y;
-                this.initialized = true;
+                this.HasValue = true;
             }
         }
 
@@ -92,6 +81,6 @@ namespace GeneralTreeLayout
             }
         }
 
-        public bool HasValue => this.initialized;
+        public bool HasValue { get; private set; }
     }
 }

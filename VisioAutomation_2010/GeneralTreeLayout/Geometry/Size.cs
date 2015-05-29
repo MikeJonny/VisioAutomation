@@ -1,4 +1,4 @@
-﻿namespace GeneralTreeLayout
+﻿namespace GeneralTreeLayout.Geometry
 {
     public struct Size
     {

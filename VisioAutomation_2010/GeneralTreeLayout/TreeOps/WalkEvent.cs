@@ -1,4 +1,4 @@
-﻿namespace GeneralTreeLayout
+﻿namespace GeneralTreeLayout.TreeOps
 {
     /// <summary>
     /// Assists in performing a depth-first traversal of nodes for some Node type T. 

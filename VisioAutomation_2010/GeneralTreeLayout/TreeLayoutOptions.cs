@@ -10,11 +10,11 @@ namespace GeneralTreeLayout
             this.Alignment = AlignmentVertical.Top;
             this.MaximumDepth = 100;
             this.LevelSeparation = 1;
-            this.DefaultNodeSize = new Size(1, 1);
+            this.DefaultNodeSize = new Geometry.Size(1, 1);
         }
 
-        public Point TopAdjustment { get; set; }
-        public Size DefaultNodeSize { get; set; }
+        public Geometry.Point TopAdjustment { get; set; }
+        public Geometry.Size DefaultNodeSize { get; set; }
         public double LevelSeparation { get; set; }
         public int MaximumDepth { get; set; }
         public AlignmentVertical Alignment { get; set; }

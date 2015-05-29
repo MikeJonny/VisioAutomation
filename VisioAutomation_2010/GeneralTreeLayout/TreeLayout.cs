@@ -6,23 +6,19 @@ using System.Linq;
  * This is a C# translation of the JavaScript source code of "Graphic JavaScript LayoutTree with Layout" by Emilio Cortegoso Lobato 
  * http://www.codeproject.com/KB/scripting/graphic_javascript_tree.aspx
  * 
- * 
  * That code is in turn is based on: "Positioning Nodes For General Trees" by John Q. Walker II
  * It was originaly published in "Software - Practice and Experience", July 1990, Copyright 1990 by John Wiley and Sons, Ltd.
  * The  source available here http://www.ddj.com/cpp/184402320
  * 
- * 
  * KEY UPDATES
  * ------------
- * - C# Implementation
- * - Separated formatting from layout and removed formatting information
+ * - C# Implementation (obviously)
+ * - Removed formatting components - this is pure layout
  * - Strongly typed
- * - Works with the origin in the lower left
- * - uses VA structs such as Rectangle, Point, Size
- * - Names of methods changed to match guidelines for .NET Libraries
- * - Added back in some comments from the original source code by John Q. Walker II
+ * - Coordinate system origin is in lower left
+ * - Added some comments from the original source code written by John Q. Walker II
  * 
- * */
+ */
 
 namespace GeneralTreeLayout
 {
@@ -31,7 +27,7 @@ namespace GeneralTreeLayout
         private Dictionary<int, double> max_level_height;
         private Dictionary<int, double> max_level_width;
         private Dictionary<int, Node<T>> previous_level_node;
-        private Point root_offset;
+        private Geometry.Point root_offset;
         private readonly Node<T> root;
 
         public TreeLayoutOptions Options { get; set; }
@@ -105,8 +101,7 @@ namespace GeneralTreeLayout
             var first_child = node.FirstChild;
             var first_child_left_neighbor = first_child.left_neighbor;
             int j = 1;
-            for (int k = this.Options.MaximumDepth - level;
-                 first_child != null && first_child_left_neighbor != null && j <= k;)
+            for (int k = this.Options.MaximumDepth - level; first_child != null && first_child_left_neighbor != null && j <= k;)
             {
                 double modifier_sum_right = 0;
                 double modifier_sum_left = 0;
@@ -162,7 +157,7 @@ namespace GeneralTreeLayout
             }
         }
 
-        public Rectangle GetBoundingBoxOfTree()
+        public Geometry.Rectangle GetBoundingBoxOfTree()
         {
             if (this.Root.ChildCount < 1)
             {
@@ -170,7 +165,7 @@ namespace GeneralTreeLayout
             }
             var nodes = this.Nodes.ToList();
 
-            var bb = new BoundingBox(nodes.Select(n => n.Rect));
+            var bb = new Geometry.BoundingBox(nodes.Select(n => n.Rect));
             if (!bb.HasValue)
             {
                 throw new System.InvalidOperationException("Internal Error: Could not compute bounding box");
@@ -207,7 +202,7 @@ namespace GeneralTreeLayout
         //Layout algorithm
         private void first_walk(Node<T> node, int level)
         {
-            node.Position = new Point(0, 0);
+            node.Position = new Geometry.Point(0, 0);
             node.prelim_x = 0;
             node.modifier = 0;
             node.left_neighbor = null;
@@ -267,7 +262,7 @@ namespace GeneralTreeLayout
             }
         }
 
-        private void second_walk(Node<T> node, int level, Point p)
+        private void second_walk(Node<T> node, int level, Geometry.Point p)
         {
             /*------------------------------------------------------
                 * During a second pre-order walk, each node is given a
@@ -322,19 +317,19 @@ namespace GeneralTreeLayout
             if (flag)
             {
                 // QUESTION: Why is this step performed?
-                node.Position = new Point(node.Position.Y, node.Position.X);
+                node.Position = new Geometry.Point(node.Position.Y, node.Position.X);
             }
 
             switch (this.Options.Direction)
             {
                 case TreeLayoutDirection.TopToBottom:
                     {
-                        node.Position = new Point(node.Position.X, -node.Position.Y - nodesizeTmp);
+                        node.Position = new Geometry.Point(node.Position.X, -node.Position.Y - nodesizeTmp);
                         break;
                     }
                 case TreeLayoutDirection.RightToLeft:
                     {
-                        node.Position = new Point(-node.Position.X - nodesizeTmp, node.Position.Y);
+                        node.Position = new Geometry.Point(-node.Position.X - nodesizeTmp, node.Position.Y);
                         break;
                     }
             }
@@ -375,7 +370,7 @@ namespace GeneralTreeLayout
             // NOTE: in the original code this was a case statement on Options.Direction that did the same thing for each direction 
             this.root_offset = this.Options.TopAdjustment + this.root.Position;
 
-            this.second_walk(this.root, 0, new Point(0, 0));
+            this.second_walk(this.root, 0, new Geometry.Point(0, 0));
 
             this.max_level_height = null;
             this.max_level_width = null;
@@ -419,7 +414,7 @@ namespace GeneralTreeLayout
             }
         }
 
-        private static double GetSide(Rectangle r, TreeLayoutDirection direction)
+        private static double GetSide(Geometry.Rectangle r, TreeLayoutDirection direction)
         {
             switch (direction)
             {
@@ -473,7 +468,7 @@ namespace GeneralTreeLayout
             }
         }
 
-        public LineSegment GetConnectionLine(ParentChildConnection<Node<T>> connection)
+        public Geometry.LineSegment GetConnectionLine(ParentChildConnection<Node<T>> connection)
         {
             var parent_rect = connection.Parent.Rect;
             var child_rect = connection.Child.Rect;
@@ -501,10 +496,10 @@ namespace GeneralTreeLayout
                 child_y = child_rect.Center.Y;
             }
 
-            var parent_attach_point = new Point(parent_x, parent_y);
-            var child_attach_point = new Point(child_x, child_y);
+            var parent_attach_point = new Geometry.Point(parent_x, parent_y);
+            var child_attach_point = new Geometry.Point(child_x, child_y);
 
-            return new LineSegment(parent_attach_point, child_attach_point);
+            return new Geometry.LineSegment(parent_attach_point, child_attach_point);
         }
 
         public static bool IsVertical(TreeLayoutDirection direction)
@@ -512,10 +507,10 @@ namespace GeneralTreeLayout
             return (direction == TreeLayoutDirection.BottomToTop || direction == TreeLayoutDirection.TopToBottom);
         }
 
-        public Point[] GetConnectionPolyline(ParentChildConnection<Node<T>> connection)
+        public Geometry.Point[] GetConnectionPolyline(ParentChildConnection<Node<T>> connection)
         {
             var lineseg = this.GetConnectionLine(connection);
-            Point m0, m1;
+            Geometry.Point m0, m1;
 
             var parent_attach_point = lineseg.Start;
             var child_attach_point = lineseg.End;
@@ -529,8 +524,8 @@ namespace GeneralTreeLayout
                 {
                     b = -b;
                 }
-                m0 = new Point(lineseg.Start.X, lineseg.End.Y + b);
-                m1 = new Point(lineseg.End.X, lineseg.End.Y + b);
+                m0 = new Geometry.Point(lineseg.Start.X, lineseg.End.Y + b);
+                m1 = new Geometry.Point(lineseg.End.X, lineseg.End.Y + b);
             }
             else
             {
@@ -538,14 +533,14 @@ namespace GeneralTreeLayout
                 {
                     a = -a;
                 }
-                m0 = new Point(lineseg.End.X - a, lineseg.Start.Y);
-                m1 = new Point(lineseg.End.X - a, lineseg.End.Y);
+                m0 = new Geometry.Point(lineseg.End.X - a, lineseg.Start.Y);
+                m1 = new Geometry.Point(lineseg.End.X - a, lineseg.End.Y);
             }
 
             return new[] {lineseg.Start, m0, m1, lineseg.End};
         }
 
-        public Point[] GetConnectionBezier(ParentChildConnection<Node<T>> connection)
+        public Geometry.Point[] GetConnectionBezier(ParentChildConnection<Node<T>> connection)
         {
             var lineseg = this.GetConnectionLine(connection);
 
@@ -557,8 +552,8 @@ namespace GeneralTreeLayout
 
 
             var handle_displacement = TreeLayout<T>.IsVertical(this.Options.Direction)
-                                          ? new Point(0, dif.Y)
-                                          : new Point(dif.X, 0);
+                                          ? new Geometry.Point(0, dif.Y)
+                                          : new Geometry.Point(dif.X, 0);
 
             var h1 = parent_attach_point.Add(handle_displacement);
             var h2 = child_attach_point.Add(handle_displacement * (-1));
@@ -570,22 +565,22 @@ namespace GeneralTreeLayout
             TA root,
             System.Func<TA, IEnumerable<TA>> enum_children,
             System.Func<TA, T> func_get_data,
-            System.Func<TA, Size> func_get_size)
+            System.Func<TA, Geometry.Size> func_get_size)
         {
-            var walkevents = TreeOps.Walk<TA>(root, n => enum_children(n));
+            var walkevents = TreeOps.TreeOps.Walk<TA>(root, n => enum_children(n));
             return TreeLayout<T>.CreateLayoutTree(walkevents, func_get_data, func_get_size);
         }
 
         private static Node<T> CreateLayoutTree<TA>(
-            IEnumerable<WalkEvent<TA>> walkevents,
+            IEnumerable<TreeOps.WalkEvent<TA>> walkevents,
             System.Func<TA, T> func_get_data,
-            System.Func<TA, Size> func_get_size)
+            System.Func<TA, Geometry.Size> func_get_size)
         {
             var stack = new Stack<Node<T>>();
             Node<T> layout_root = null;
             foreach (var walkevent in walkevents)
             {
-                if (walkevent.Type == WalkEvent<TA>.WalkEventType.Enter)
+                if (walkevent.Type == TreeOps.WalkEvent<TA>.WalkEventType.Enter)
                 {
                     Node<T> parent = null;
                     if (stack.Count > 0)
@@ -608,7 +603,7 @@ namespace GeneralTreeLayout
                         layout_root = layout_node;
                     }
                 }
-                else if (walkevent.Type == WalkEvent<TA>.WalkEventType.Exit)
+                else if (walkevent.Type == TreeOps.WalkEvent<TA>.WalkEventType.Exit)
                 {
                     var layout_node = stack.Pop();
                 }
