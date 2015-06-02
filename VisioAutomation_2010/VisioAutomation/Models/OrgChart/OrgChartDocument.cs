@@ -190,11 +190,11 @@ namespace VisioAutomation.Models.OrgChart
             GeneralTreeLayout.TreeLayoutDirection dir;
             if (input_dir == LayoutDirection.Down)
             {
-                dir = GeneralTreeLayout.TreeLayoutDirection.TopToBottom;
+                dir = GeneralTreeLayout.TreeLayoutDirection.BottomToTop;
             }
             else if (input_dir == LayoutDirection.Up)
             {
-                dir = GeneralTreeLayout.TreeLayoutDirection.BottomToTop;
+                dir = GeneralTreeLayout.TreeLayoutDirection.TopToBottom;
             }
             else if (input_dir == LayoutDirection.Left)
             {
@@ -206,7 +206,7 @@ namespace VisioAutomation.Models.OrgChart
             }
             else
             {
-                dir = GeneralTreeLayout.TreeLayoutDirection.TopToBottom;
+                dir = GeneralTreeLayout.TreeLayoutDirection.BottomToTop;
             }
             return dir;
         }

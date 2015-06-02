@@ -71,7 +71,7 @@ namespace GeneralTreeLayout
         {
             switch (this.Options.Direction)
             {
-                case TreeLayoutDirection.BottomToTop:
+                case TreeLayoutDirection.TopToBottom:
                     return node.Size.Width;
 
                 case TreeLayoutDirection.RightToLeft:
@@ -80,7 +80,7 @@ namespace GeneralTreeLayout
                 case TreeLayoutDirection.LeftToRight:
                     return node.Size.Height;
 
-                case TreeLayoutDirection.TopToBottom:
+                case TreeLayoutDirection.BottomToTop:
                     return node.Size.Width;
                 default:
                     throw new System.ArgumentOutOfRangeException();
@@ -283,8 +283,8 @@ namespace GeneralTreeLayout
 
             switch (this.Options.Direction)
             {
-                case TreeLayoutDirection.BottomToTop:
                 case TreeLayoutDirection.TopToBottom:
+                case TreeLayoutDirection.BottomToTop:
                     {
                         maxsizeTmp = this.max_level_height[level];
                         nodesizeTmp = node.Size.Height;
@@ -322,7 +322,7 @@ namespace GeneralTreeLayout
 
             switch (this.Options.Direction)
             {
-                case TreeLayoutDirection.TopToBottom:
+                case TreeLayoutDirection.BottomToTop:
                     {
                         node.Position = new Geometry.Point(node.Position.X, -node.Position.Y - nodesizeTmp);
                         break;
@@ -418,11 +418,11 @@ namespace GeneralTreeLayout
         {
             switch (direction)
             {
-                case (TreeLayoutDirection.BottomToTop):
+                case (TreeLayoutDirection.TopToBottom):
                     {
                         return r.Top;
                     }
-                case (TreeLayoutDirection.TopToBottom):
+                case (TreeLayoutDirection.BottomToTop):
                     {
                         return r.Bottom;
                     }
@@ -445,13 +445,13 @@ namespace GeneralTreeLayout
         {
             switch (direction)
             {
-                case (TreeLayoutDirection.BottomToTop):
-                    {
-                        return TreeLayoutDirection.TopToBottom;
-                    }
                 case (TreeLayoutDirection.TopToBottom):
                     {
                         return TreeLayoutDirection.BottomToTop;
+                    }
+                case (TreeLayoutDirection.BottomToTop):
+                    {
+                        return TreeLayoutDirection.TopToBottom;
                     }
                 case (TreeLayoutDirection.RightToLeft):
                     {
@@ -504,7 +504,7 @@ namespace GeneralTreeLayout
 
         public static bool IsVertical(TreeLayoutDirection direction)
         {
-            return (direction == TreeLayoutDirection.BottomToTop || direction == TreeLayoutDirection.TopToBottom);
+            return (direction == TreeLayoutDirection.TopToBottom || direction == TreeLayoutDirection.BottomToTop);
         }
 
         public Geometry.Point[] GetConnectionPolyline(ParentChildConnection<Node<T>> connection)
@@ -520,7 +520,7 @@ namespace GeneralTreeLayout
 
             if (TreeLayout<T>.IsVertical(this.Options.Direction))
             {
-                if (this.Options.Direction == TreeLayoutDirection.BottomToTop)
+                if (this.Options.Direction == TreeLayoutDirection.TopToBottom)
                 {
                     b = -b;
                 }

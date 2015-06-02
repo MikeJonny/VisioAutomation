@@ -6,7 +6,7 @@ namespace GeneralTreeLayout
         {
             this.SubtreeSeparation = 1;
             this.SiblingSeparation = 1;
-            this.Direction = TreeLayoutDirection.BottomToTop;
+            this.Direction = TreeLayoutDirection.TopToBottom;
             this.Alignment = AlignmentVertical.Top;
             this.MaximumDepth = 100;
             this.LevelSeparation = 1;
